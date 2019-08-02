@@ -11,10 +11,12 @@ const todo = props => {
     setTodoName(event.target.value)
   }
 
+  const mouseMoveHandler = event => {
+    console.log(event.clientX, event.clientY)
+  }
+
   useEffect(() => {
-    document.addEventListener('mousemove', () => {
-      console.log(event.clientX, event.clientY)
-    })
+    document.addEventListener('mousemove', mouseMoveHandler)
   })
 
   useEffect(() => {
