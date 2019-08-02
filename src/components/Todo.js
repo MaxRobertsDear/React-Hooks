@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -9,6 +10,12 @@ const todo = props => {
   const inputChangeHandler = (event) => {
     setTodoName(event.target.value)
   }
+
+  useEffect(() => {
+    document.addEventListener('mousemove', () => {
+      console.log(event.clientX, event.clientY)
+    })
+  })
 
   useEffect(() => {
     axios.get('https://react-hooks-practice-7ab69.firebaseio.com/.json').then(result => {
