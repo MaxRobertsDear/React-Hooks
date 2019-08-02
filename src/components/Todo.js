@@ -20,7 +20,7 @@ const todo = props => {
     return () => {
       document.removeEventListener('mousemove', mouseMoveHandler)
     }
-  })
+  }, [])
 
   useEffect(() => {
     axios.get('https://react-hooks-practice-7ab69.firebaseio.com/.json').then(result => {
