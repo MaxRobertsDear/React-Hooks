@@ -17,6 +17,9 @@ const todo = props => {
 
   useEffect(() => {
     document.addEventListener('mousemove', mouseMoveHandler)
+    return () => {
+      document.removeEventListener('mousemove', mouseMoveHandler)
+    }
   })
 
   useEffect(() => {
