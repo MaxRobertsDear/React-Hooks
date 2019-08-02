@@ -20,7 +20,11 @@ const todo = props => {
       }
       setTodoList(todos)
     })
+    return () => {
+      console.log('Cleanup')
+    }
   }, [todoName])
+  
   const todoAddHandler = () => {
     setTodoList(todoList.concat(todoName))
     axios.post('https://react-hooks-practice-7ab69.firebaseio.com/.json', {name: todoName})
