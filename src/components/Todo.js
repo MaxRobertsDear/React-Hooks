@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react'
@@ -6,6 +7,7 @@ import axios from 'axios'
 const todo = props => {
   const [todoName, setTodoName] = useState('')
   const [todoList, setTodoList] = useState([])
+  const [submittedTodo, setSubmittedTodo] = useState(null)
 
   const inputChangeHandler = (event) => {
     setTodoName(event.target.value)
@@ -16,6 +18,13 @@ const todo = props => {
   }
 
   useEffect(() => {
+    if (submittedTodo) {
+      setTodoList(todoList.concat(submittedTodo))
+    }
+  }, [submittedTodo]
+  )
+
+  useEffect(() => {
     document.addEventListener('mousemove', mouseMoveHandler)
     return () => {
       document.removeEventListener('mousemove', mouseMoveHandler)
@@ -24,7 +33,7 @@ const todo = props => {
 
   useEffect(() => {
     axios.get('https://react-hooks-practice-7ab69.firebaseio.com/.json').then(result => {
-      console.log(result)
+      // console.log(result)
       const todoData = result.data
       const todos = []
       for (const key in todoData) {
@@ -38,15 +47,15 @@ const todo = props => {
   }, [todoName])
   
   const todoAddHandler = () => {
-    axios.post('https://react-hooks-practice-7ab69.firebaseio.com/.json', {name: todoName})
-    .then(res => {
-      console.log(res)
-      const todoItem = {id: res.data.name, name: todoName}
-      setTodoList(todoList.concat(todoItem))
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    axios
+      .post('https://react-hooks-practice-7ab69.firebaseio.com/.json', {name: todoName})
+      .then(res => {
+        const todoItem = {id: res.data.name, name: todoName}
+        setSubmittedTodo(todoItem)
+        })
+        .catch(err => {
+          console.log(err)
+        })
   }
 
   return <React.Fragment>
