@@ -7,7 +7,7 @@ import Auth from './components/Auth'
 
 const app = (props) => {
 
-  const [page, setPage] = useState('auth')
+  const [page, setPage] = useState('todos')
 
   const switchPage = (pageName) => {
     setPage(pageName)
