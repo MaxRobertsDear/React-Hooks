@@ -69,13 +69,20 @@ const todo = props => {
         const todoItem = {id: res.data.name, name: todoName}
         setSubmittedTodo(todoItem)
         })
-        .catch(err => {
-          console.log(err)
-        })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   const todoRemoveHandler = (todoID) => {
-    dispatch({type: 'REMOVE', payload: todoID})
+    axios
+      .delete(`https://react-hooks-practice-7ab69.firebaseio.com/${todoID}.json`)
+      .then(res => 
+        dispatch({type: 'REMOVE', payload: todoID})
+        )
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   return <React.Fragment>
