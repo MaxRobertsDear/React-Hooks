@@ -1,14 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import axios from 'axios'
 
 const todo = props => {
   const [todoName, setTodoName] = useState('')
-  const [todoList, setTodoList] = useState([])
+  // const [todoList, setTodoList] = useState([])
   const [submittedTodo, setSubmittedTodo] = useState(null)
 
+  
+  const todoListReducer = (state, action) => {
+    switch (action.type) {
+      case 'ADD':
+        return state.concat(action.payload)
+      case 'SET':
+        return action.payload
+      case 'REMOVE':
+        return state.filter((todo) => todo.id !== action.payload)
+      default:
+        return state
+    }
+  }
+
+  const [todoList, dispatch] = useReducer(todoListReducer, [])
+  
   const inputChangeHandler = (event) => {
     setTodoName(event.target.value)
   }
@@ -19,7 +35,7 @@ const todo = props => {
 
   useEffect(() => {
     if (submittedTodo) {
-      setTodoList(todoList.concat(submittedTodo))
+      dispatch({type: 'ADD', payload: submittedTodo})
     }
   }, [submittedTodo]
   )
@@ -39,7 +55,7 @@ const todo = props => {
       for (const key in todoData) {
         todos.push({id: key, name: todoData[key].name})
       }
-      setTodoList(todos)
+      dispatch({type: 'SET', payload: todos})
     })
     return () => {
       console.log('Cleanup')
