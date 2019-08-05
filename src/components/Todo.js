@@ -7,7 +7,7 @@ import axios from 'axios'
 const todo = props => {
   const [todoName, setTodoName] = useState('')
   // const [todoList, setTodoList] = useState([])
-  const [submittedTodo, setSubmittedTodo] = useState(null)
+  // const [submittedTodo, setSubmittedTodo] = useState(null)
 
   
   const todoListReducer = (state, action) => {
@@ -33,12 +33,12 @@ const todo = props => {
     console.log(event.clientX, event.clientY)
   }
 
-  useEffect(() => {
-    if (submittedTodo) {
-      dispatch({type: 'ADD', payload: submittedTodo})
-    }
-  }, [submittedTodo]
-  )
+  // useEffect(() => {
+  //   if (submittedTodo) {
+  //     dispatch({type: 'ADD', payload: submittedTodo})
+  //   }
+  // }, [submittedTodo]
+  // )
 
   useEffect(() => {
     document.addEventListener('mousemove', mouseMoveHandler)
@@ -67,7 +67,7 @@ const todo = props => {
       .post('https://react-hooks-practice-7ab69.firebaseio.com/.json', {name: todoName})
       .then(res => {
         const todoItem = {id: res.data.name, name: todoName}
-        setSubmittedTodo(todoItem)
+        dispatch({type: 'ADD', payload: todoItem})
         })
       .catch(err => {
         console.log(err)
