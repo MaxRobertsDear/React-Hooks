@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 
 const todo = props => {
-  const [todoName, setTodoName] = useState('')
+  // const [todoName, setTodoName] = useState('')
   // const [todoList, setTodoList] = useState([])
   // const [submittedTodo, setSubmittedTodo] = useState(null)
 
-  
+  const todoInputRef = useRef()
+
   const todoListReducer = (state, action) => {
     switch (action.type) {
       case 'ADD':
@@ -25,9 +26,9 @@ const todo = props => {
 
   const [todoList, dispatch] = useReducer(todoListReducer, [])
   
-  const inputChangeHandler = (event) => {
-    setTodoName(event.target.value)
-  }
+  // const inputChangeHandler = (event) => {
+  //   setTodoName(event.target.value)
+  // }
 
   const mouseMoveHandler = event => {
     console.log(event.clientX, event.clientY)
@@ -47,6 +48,8 @@ const todo = props => {
     }
   }, [])
 
+
+
   useEffect(() => {
     axios.get('https://react-hooks-practice-7ab69.firebaseio.com/.json').then(result => {
       // console.log(result)
@@ -60,9 +63,10 @@ const todo = props => {
     return () => {
       console.log('Cleanup')
     }
-  }, [todoName])
+  }, [])
   
   const todoAddHandler = () => {
+    const todoName = todoInputRef.current.value
     axios
       .post('https://react-hooks-practice-7ab69.firebaseio.com/.json', {name: todoName})
       .then(res => {
@@ -89,8 +93,7 @@ const todo = props => {
     <input 
       type="text" 
       placeholder="todo"
-      onChange={inputChangeHandler}
-      value={todoName} />
+      ref={todoInputRef} />
     <button type="button" onClick={todoAddHandler}>
       Add
     </button>
