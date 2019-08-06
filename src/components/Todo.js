@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useReducer, useRef } from 'react'
+import React, { useState, useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 
 import List from './List'
 
 const todo = props => {
+  const [inputIsValid, setInputIsValid] = useState(false)
   // const [todoName, setTodoName] = useState('')
   // const [todoList, setTodoList] = useState([])
   // const [submittedTodo, setSubmittedTodo] = useState(null)
@@ -34,6 +35,14 @@ const todo = props => {
 
   const mouseMoveHandler = event => {
     console.log(event.clientX, event.clientY)
+  }
+
+  const inputValidationHandler = (event) => {
+    if (event.target.value === ''){
+      setInputIsValid(false)
+    } else {
+      setInputIsValid(true)
+    }
   }
 
   // useEffect(() => {
@@ -95,7 +104,9 @@ const todo = props => {
     <input 
       type="text" 
       placeholder="todo"
-      ref={todoInputRef} />
+      ref={todoInputRef}
+      onChange={inputValidationHandler}
+      style={{backgroundColor: !inputIsValid ? 'red' : 'transparent'}} />
     <button type="button" onClick={todoAddHandler}>
       Add
     </button>
