@@ -99,7 +99,7 @@ const todo = props => {
     <button type="button" onClick={todoAddHandler}>
       Add
     </button>
-    <List items={todoList} onClick={todoAddHandler} />
+    <List items={todoList} onClick={todoRemoveHandler} />
   </React.Fragment>
 }
 
