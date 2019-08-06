@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useEffect, useReducer, useRef } from 'react'
+import React, { useState, useEffect, useReducer, useRef, useMemo } from 'react'
 import axios from 'axios'
 
 import List from './List'
@@ -52,12 +52,12 @@ const todo = props => {
   // }, [submittedTodo]
   // )
 
-  useEffect(() => {
-    document.addEventListener('mousemove', mouseMoveHandler)
-    return () => {
-      document.removeEventListener('mousemove', mouseMoveHandler)
-    }
-  }, [])
+  // useEffect(() => {
+  //   document.addEventListener('mousemove', mouseMoveHandler)
+  //   return () => {
+  //     document.removeEventListener('mousemove', mouseMoveHandler)
+  //   }
+  // }, [])
 
 
 
@@ -110,7 +110,7 @@ const todo = props => {
     <button type="button" onClick={todoAddHandler}>
       Add
     </button>
-    <List items={todoList} onClick={todoRemoveHandler} />
+    {useMemo(() => (<List items={todoList} onClick={todoRemoveHandler} />), [todoList])}
   </React.Fragment>
 }
 
