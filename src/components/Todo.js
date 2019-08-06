@@ -4,6 +4,8 @@
 import React, { useEffect, useReducer, useRef } from 'react'
 import axios from 'axios'
 
+import List from './List'
+
 const todo = props => {
   // const [todoName, setTodoName] = useState('')
   // const [todoList, setTodoList] = useState([])
@@ -97,11 +99,7 @@ const todo = props => {
     <button type="button" onClick={todoAddHandler}>
       Add
     </button>
-    <ul>
-      {todoList.map(todo => (
-        <li key={todo.id} onClick={todoRemoveHandler.bind(this, todo.id)}>{todo.name}</li>
-      ))}
-    </ul>
+    <List items={todoList} onClick={todoAddHandler} />
   </React.Fragment>
 }
 
